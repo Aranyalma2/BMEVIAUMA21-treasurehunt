@@ -68,6 +68,12 @@ Regenerate the DB scheme [ER-diagram](docs/specification/gfx/db-scheme.svg)
 yarn prisma generate --generator erd
 ```
 
+Start database WebUI
+
+```bash
+yarn prisma studio
+```
+
 #### Merging to main
 
 There are recommended GitHub Actions workflows for this setup, which will fail if one of the following commands fails:
