@@ -1,0 +1,45 @@
+{
+  "name": "bmeviauma21-tresurehunt",
+  "version": "0.0.1",
+  "description": "BMEVIAUMA21 - Tresure Hunt homework application ",
+  "repository": "https://github.com/Aranyalma2/BMEVIAUMA21-tresurehunt.git",
+  "author": "Aranyalma2 <40268481+Aranyalma2@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start:backend": "cd apps/backend && yarn start:dev",
+    "build:backend": "cd apps/backend && yarn build",
+    "start:backend:prod": "cd apps/backend && yarn start:prod",
+    "start:frontend": "cd apps/frontend && yarn start:dev",
+    "build:frontend": "cd apps/frontend && yarn build",
+    "start:frontend:prod": "cd apps/frontend && yarn start:prod",
+    "start:admin": "cd apps/admin && yarn dev",
+    "build:admin": "cd apps/admin && yarn build",
+    "start:admin:prod": "cd apps/admin && yarn start:prod",
+    "start:all": "concurrently \"yarn start:backend\" \"yarn start:frontend\" \"yarn start:admin\"",
+    "start:all:prod": "concurrently \"yarn start:backend:prod\" \"yarn start:frontend:prod\" \"yarn start:admin:prod\"",
+    "format": "prettier --write apps && prettier --write docs",
+    "format:check": "prettier --check apps",
+    "lint": "eslint apps --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint apps --ext .ts,.tsx --fix",
+    "prisma:mock": "npx prisma migrate reset --skip-generate erd && node apps/database/mock.js"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^10.9.1",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "prisma": "^5.18.0",
+    "prisma-erd-generator": "^1.11.2"
+  },
+  "prisma": {
+    "schema": "apps/database/schema.prisma"
+  },
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
