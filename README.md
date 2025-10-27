@@ -47,7 +47,7 @@ yarn build:admin
 yarn start:admin:prod
 ```
 
-## Git Branches
+## Dev & Git Branches
 
 * **main**: (default) Collect every modification here, do NOT commit directly there, create a pull request for merge in other branches.
 
@@ -55,4 +55,4 @@ yarn start:admin:prod
 > For high velocity one module development use module branches (backend, admin, etc...)\
 > For one feature across multiple module development create an issue with feature description and create an auto (dedicated) branch for it.
 
-For other dev stuff chech [DEV.md](DEV.md)
+For other dev stuff check [DEV.md](DEV.md)
