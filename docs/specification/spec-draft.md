@@ -148,14 +148,14 @@ A felhasználók új feladatokat is beküldhetnek, amelyeket adminisztrátorok j
 
 ## 8. Technológiai specifikáció
 
-| Komponens    | Technológia                            |
-| ------------ | -------------------------------------- |
-| Frontend     | vue3 + tailwindcss                     |
-| Backend      | NestJS                                 |
-| Adatbázis    | PostgreSQL                             |
-| API formátum | REST (JSON)                            |
-| Térkép       | OpenStreetMap + Leaflet                |
-| Hitelesítés  | Alap jelszó-ellenőrzés (bcrypt hash)   |
+| Komponens    | Technológia                          |
+| ------------ | ------------------------------------ |
+| Frontend     | vue3 + tailwindcss                   |
+| Backend      | NestJS                               |
+| Adatbázis    | PostgreSQL                           |
+| API formátum | REST (JSON)                          |
+| Térkép       | OpenStreetMap + Leaflet              |
+| Hitelesítés  | Alap jelszó-ellenőrzés (bcrypt hash) |
 
 ---
 
