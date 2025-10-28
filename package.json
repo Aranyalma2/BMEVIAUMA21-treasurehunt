@@ -10,7 +10,7 @@
     "start:backend": "cd apps/backend && yarn start:dev",
     "build:backend": "cd apps/backend && yarn build",
     "start:backend:prod": "cd apps/backend && yarn start:prod",
-    "start:frontend": "cd apps/frontend && yarn start:dev",
+    "start:frontend": "cd apps/frontend && yarn dev",
     "build:frontend": "cd apps/frontend && yarn build",
     "start:frontend:prod": "cd apps/frontend && yarn start:prod",
     "start:admin": "cd apps/admin && yarn dev",
@@ -20,8 +20,8 @@
     "start:all:prod": "concurrently \"yarn start:backend:prod\" \"yarn start:frontend:prod\" \"yarn start:admin:prod\"",
     "format": "prettier --write apps && prettier --write docs",
     "format:check": "prettier --check apps",
-    "lint": "eslint apps --ext .ts,.tsx --max-warnings 0",
-    "lint:fix": "eslint apps --ext .ts,.tsx --fix",
+    "lint": "eslint apps --ext .ts,.tsx,.vue --max-warnings 0",
+    "lint:fix": "eslint apps --ext .ts,.tsx,.vue --fix",
     "prisma:mock": "yarn prisma migrate reset --skip-generate erd && node apps/database/mock.js"
   },
   "workspaces": [
@@ -29,14 +29,19 @@
   ],
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^10.9.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "bcrypt": "^6.0.0",
+    "concurrently": "^9.0.1",
     "dotenv": "^17.2.3",
-    "eslint": "^8.42.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^10.5.1",
     "prettier": "^3.0.0",
     "prisma": "^6.18.0",
-    "prisma-erd-generator": "^1.11.2"
+    "prisma-erd-generator": "^1.11.2",
+    "vue-eslint-parser": "^10.2.0"
   },
   "prisma": {
     "schema": "apps/database/schema.prisma"

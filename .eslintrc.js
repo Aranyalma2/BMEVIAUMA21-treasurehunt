@@ -2,49 +2,57 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    jest: true,
-    es2021: true,
+    browser: true,
+    es2024: true,
   },
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    // Type-aware linting for all local tsconfigs
-    project: ['./apps/backend/tsconfig.json', './apps/frontend/tsconfig.json', './apps/admin/tsconfig.json'],
+    parser: '@typescript-eslint/parser',
+    project: [
+      './apps/backend/tsconfig.json',
+      './apps/admin/tsconfig.app.json',
+      './apps/admin/tsconfig.node.json',
+      './apps/frontend/tsconfig.app.json',
+      './apps/frontend/tsconfig.node.json',
+    ],
     tsconfigRootDir: __dirname,
     sourceType: 'module',
-    ecmaVersion: 2021,
+    ecmaVersion: 2024,
+    extraFileExtensions: ['.vue'],
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
   extends: [
+    'plugin:vue/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended', // Enables Prettier rules as ESLint errors
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: [
     '**/dist',
     '**/node_modules',
-    '.eslintrc.js',
+    '**/*.d.ts',
+    '**/.vite',
+    '**/coverage',
+    '.eslintrc.cjs',
+  ],
+  overrides: [
+    {
+      files: ['*.js', '*.cjs'],
+      parserOptions: {
+        project: null,
+      },
+    },
+    {
+      files: ['**/vite.config.ts', '**/vitest.config.ts'],
+      parserOptions: {
+        project: null,
+      },
+    },
   ],
   rules: {
-    // Prettier alignment
-    'prettier/prettier': [
-      'error',
-      {
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        printWidth: 120,
-        jsxSingleQuote: true,
-        bracketSameLine: false,
-        endOfLine: 'lf',
-        arrowParens: 'always',
-        tabWidth: 2,
-      },
-    ],
-
-    // Relaxed TS rules for monorepo flexibility
-    '@typescript-eslint/interface-name-prefix': 'off',
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    'vue/multi-word-component-names': 'off',
   },
 };
