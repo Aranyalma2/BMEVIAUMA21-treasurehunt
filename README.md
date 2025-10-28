@@ -1,5 +1,4 @@
 # BMEVIAUMA21-treasurehunt
-BMEVIAUMA21 - Tresure Hunt homework application
 
 ## Getting Started
 
