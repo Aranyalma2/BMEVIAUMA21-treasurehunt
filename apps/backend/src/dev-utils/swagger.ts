@@ -16,6 +16,7 @@ export function loadSwagger(app) {
     )
     .setVersion(VERSION)
     .addBearerAuth()
+    .setBasePath('api')
     .addTag('auth')
     .addTag('user')
     .addTag('roles')

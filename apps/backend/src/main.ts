@@ -12,6 +12,8 @@ async function bootstrap() {
     logger: IN_PRODUCTION ? ['log', 'error', 'warn'] : ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
+  app.setGlobalPrefix('api');
+
   //In development mode, start Swagger
   if (IN_DEVELOPMENT) {
     loadSwagger(app);
