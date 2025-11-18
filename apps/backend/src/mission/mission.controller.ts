@@ -117,7 +117,6 @@ export class MissionController {
     @Body() submitMissionDto: SubmitMissionDto,
     @CurrentUser() user: JwtUserDto,
   ): Promise<{ result: 'Success' | 'Failed' }> {
-    console.log(submitMissionDto);
     return this.missionService.submitMission(
       Number(id),
       user.id,

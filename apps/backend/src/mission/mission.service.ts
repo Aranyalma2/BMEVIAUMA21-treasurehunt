@@ -250,7 +250,6 @@ export class MissionService {
     userLon: number,
     answer: any,
   ): Promise<{ result: 'Success' | 'Failed' }> {
-    console.log(answer);
     const mission = await this.prisma.mission.findUnique({
       where: { id, status: Status.APPROVED },
       include: {
@@ -484,6 +483,7 @@ export class MissionService {
       latitude: mission.latitude,
       status: mission.status,
       createdAt: mission.createdAt,
+      updatedAt: mission.updatedAt,
       createdById: mission.createdById,
       approvedAt: mission.approvedAt,
       approvedById: mission.approvedById,
