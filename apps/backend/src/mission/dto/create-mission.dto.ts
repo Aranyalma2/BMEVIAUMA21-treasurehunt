@@ -35,4 +35,7 @@ class CreateMissionNested {
   task: TaskDto;
 }
 
-export class CreateMissionDto extends IntersectionType(PickType(Mission, ['name', 'description']), CreateMissionNested) {}
+export class CreateMissionDto extends IntersectionType(
+  PickType(Mission, ['name', 'description']),
+  CreateMissionNested,
+) {}
