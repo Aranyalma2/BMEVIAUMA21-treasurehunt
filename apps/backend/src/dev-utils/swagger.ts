@@ -19,6 +19,8 @@ export function loadSwagger(app) {
     .setBasePath('api')
     .addTag('auth')
     .addTag('user')
+    .addTag('mission')
+    .addTag('leaderboard')
     .addTag('roles')
     .build();
   const document = SwaggerModule.createDocument(app, config);
