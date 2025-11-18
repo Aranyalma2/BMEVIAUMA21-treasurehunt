@@ -125,4 +125,22 @@ export class UserService {
       throw error;
     }
   }
+
+  /**
+   * Delete a user
+   * @param id - The user ID
+   * @throws {NotFoundException} - If no user is found
+   */
+  async remove(id: number): Promise<void> {
+    try {
+      await this.prisma.user.delete({ where: { id } });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException(`User not found with ID: ${id}`);
+        }
+      }
+      throw error;
+    }
+  }
 }

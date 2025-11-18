@@ -5,9 +5,18 @@ import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { RolesModule } from './roles/roles.module';
+import { MissionModule } from './mission/mission.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 
 @Module({
-  imports: [PrismaModule.forRoot({ isGlobal: true }), AuthModule, UserModule, RolesModule],
+  imports: [
+    PrismaModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UserModule,
+    RolesModule,
+    MissionModule,
+    LeaderboardModule,
+  ],
   controllers: [AppController],
   providers: [
     providePrismaClientExceptionFilter({

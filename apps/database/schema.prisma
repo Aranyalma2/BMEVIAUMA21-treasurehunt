@@ -18,19 +18,133 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Roles for users
+// Enums
 enum Role {
   USER
   ADMIN
 }
 
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TaskType {
+  TRUE_OR_FALSE
+  MULTI_CHOICE
+  SIMPLE_QUESTION
+}
+
 // User model
 model User {
-  id         Int                   @id @default(autoincrement())
-  username   String                @unique
-  password   String
-  name       String?
-  role       Role                  @default(USER)
-  createdAt  DateTime              @default(now())
-  updatedAt  DateTime              @updatedAt
+  id                  Int                   @id @default(autoincrement())
+  username            String                @unique
+  password            String
+  name                String
+  role                Role                  @default(USER)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  
+  // Relations
+  createdMissions     Mission[]             @relation("CreatedMissions")
+  approvedMissions    Mission[]             @relation("ApprovedMissions")
+  completedMissions   CompletedMission[]
+}
+
+// Mission model
+model Mission {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  description         String
+  longitude           Float
+  latitude            Float
+  status              Status                @default(PENDING)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  approvedAt          DateTime?
+  
+  // Foreign Keys
+  createdById         Int
+  approvedById        Int?
+  taskId              Int                   @unique
+  
+  // Relations
+  createdBy           User                  @relation("CreatedMissions", fields: [createdById], references: [id])
+  approvedBy          User?                 @relation("ApprovedMissions", fields: [approvedById], references: [id])
+  task                Task                  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  completedBy         CompletedMission[]
+  
+  @@index([longitude, latitude])
+  @@index([status])
+}
+
+// Task model (polymorphic base)
+model Task {
+  id                  Int                   @id @default(autoincrement())
+  type                TaskType
+  
+  // Relations
+  mission             Mission?
+  trueOrFalseTask     TrueOrFalseTask?
+  multiChoiceTask     MultiChoiceTask?
+  simpleQuestionTask  SimpleQuestionTask?
+}
+
+// TrueOrFalseTask
+model TrueOrFalseTask {
+  id                  Int                   @id @default(autoincrement())
+  question            String
+  answer              Boolean
+  
+  taskId              Int                   @unique
+  task                Task                  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+// MultiChoiceTask
+model MultiChoiceTask {
+  id                  Int                   @id @default(autoincrement())
+  question            String
+  
+  taskId              Int                   @unique
+  task                Task                  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  answers             MultiChoiceAnswer[]
+}
+
+// MultiChoiceAnswer
+model MultiChoiceAnswer {
+  id                  Int                   @id @default(autoincrement())
+  text                String
+  isTrue              Boolean
+  
+  multiChoiceTaskId   Int
+  multiChoiceTask     MultiChoiceTask       @relation(fields: [multiChoiceTaskId], references: [id], onDelete: Cascade)
+}
+
+// SimpleQuestionTask
+model SimpleQuestionTask {
+  id                  Int                   @id @default(autoincrement())
+  question            String
+  answers             String[]              // Array of acceptable answers
+  
+  taskId              Int                   @unique
+  task                Task                  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+// CompletedMission (tracks user completion)
+model CompletedMission {
+  id                  Int                   @id @default(autoincrement())
+  completedAt         DateTime              @default(now())
+  
+  userId              Int
+  missionId           Int
+  
+  user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mission             Mission               @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, missionId])
+  @@index([userId])
+  @@index([missionId])
 }

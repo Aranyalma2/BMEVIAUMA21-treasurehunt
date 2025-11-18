@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -34,6 +34,15 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'User not found with ID' })
   updateCurrentUser(@CurrentUser() user: JwtUserDto, @Body() updateUserDto: UpdateUserDto): Promise<ResponseUserDto> {
     return this.userService.update(Number(user.id), updateUserDto);
+  }
+
+  @Delete('me')
+  @ApiOperation({ summary: 'Delete current user account' })
+  @ApiResponse({ status: 200, description: 'User account deleted successfully' })
+  @ApiResponse({ status: 404, description: 'User not found with ID' })
+  async deleteCurrentUser(@CurrentUser() user: JwtUserDto): Promise<{ message: string }> {
+    await this.userService.remove(Number(user.id));
+    return { message: 'User account deleted successfully' };
   }
 
   @Get('all')
@@ -76,5 +85,20 @@ export class UserController {
       delete updateUserDto.role;
     }
     return this.userService.update(Number(id), updateUserDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiOperation({
+    summary: 'Delete a specific user',
+    description: 'ADMIN role necessary',
+  })
+  @ApiParam({ name: 'id', description: 'User ID', required: true, type: 'number' })
+  @ApiResponse({ status: 200, description: 'User deleted successfully' })
+  @ApiResponse({ status: 404, description: 'User not found with ID' })
+  async deleteUser(@Param('id') id: string): Promise<{ message: string }> {
+    await this.userService.remove(Number(id));
+    return { message: 'User deleted successfully' };
   }
 }
