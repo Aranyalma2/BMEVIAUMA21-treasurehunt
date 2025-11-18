@@ -20,19 +20,15 @@ const handleSubmit = async () => {
 <template>
   <div class="min-h-screen bg-gray-900 flex items-center justify-center">
     <div class="w-full max-w-sm px-4">
-      <h1 class="text-2xl font-semibold text-center text-white mb-6">
-        Admin Sign In
-      </h1>
+      <h1 class="text-2xl font-semibold text-center text-white mb-6">Admin Sign In</h1>
 
       <div v-if="authStore.error" class="mb-4 p-3 bg-red-900 border border-red-700 text-red-200 text-sm">
         {{ authStore.error }}
       </div>
 
-      <form @submit.prevent="handleSubmit" class="space-y-3">
+      <form class="space-y-3" @submit.prevent="handleSubmit">
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">
-            Username
-          </label>
+          <label class="block text-sm font-medium text-gray-300 mb-1"> Username </label>
           <input
             v-model="username"
             type="text"
@@ -43,9 +39,7 @@ const handleSubmit = async () => {
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">
-            Password
-          </label>
+          <label class="block text-sm font-medium text-gray-300 mb-1"> Password </label>
           <input
             v-model="password"
             type="password"

@@ -72,16 +72,21 @@ onMounted(() => {
               <div v-if="editingUserId === user.id" class="flex gap-1">
                 <select
                   :value="normalizeRole(user.role)"
-                  @change="handleRoleChange(user.id, ($event.target as HTMLSelectElement).value)"
                   class="px-2 py-1 border border-gray-700 bg-gray-800 text-white text-sm focus:outline-none focus:ring-1 focus:ring-gray-600"
+                  @change="handleRoleChange(user.id, ($event.target as HTMLSelectElement).value)"
                 >
-                  <option v-for="roleName in usersStore.roles" :key="roleName" :value="roleName" class="bg-gray-800 text-white">
+                  <option
+                    v-for="roleName in usersStore.roles"
+                    :key="roleName"
+                    :value="roleName"
+                    class="bg-gray-800 text-white"
+                  >
                     {{ formatRole(roleName) }}
                   </option>
                 </select>
                 <button
-                  @click="editingUserId = null"
                   class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-gray-800"
+                  @click="editingUserId = null"
                 >
                   Cancel
                 </button>
@@ -92,15 +97,12 @@ onMounted(() => {
                     'px-2 py-1 text-xs font-medium border',
                     normalizeRole(user.role) === 'ADMIN'
                       ? 'bg-purple-900 border-purple-700 text-purple-200'
-                      : 'bg-blue-900 border-blue-700 text-blue-200'
+                      : 'bg-blue-900 border-blue-700 text-blue-200',
                   ]"
                 >
                   {{ formatRole(user.role) }}
                 </span>
-                <button
-                  @click="editingUserId = user.id"
-                  class="text-xs text-gray-400 hover:text-gray-300 underline"
-                >
+                <button class="text-xs text-gray-400 hover:text-gray-300 underline" @click="editingUserId = user.id">
                   edit
                 </button>
               </div>
@@ -108,9 +110,9 @@ onMounted(() => {
             <td class="px-4 py-3 text-gray-400">{{ formatDate(user.createdAt) }}</td>
             <td class="px-4 py-3 text-center">
               <button
-                @click="handleDelete(user.id)"
                 class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-red-900 hover:border-red-700"
                 title="Delete"
+                @click="handleDelete(user.id)"
               >
                 Delete
               </button>

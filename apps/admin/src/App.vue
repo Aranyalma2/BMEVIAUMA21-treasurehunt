@@ -17,7 +17,7 @@ const handleLogout = () => {
 <template>
   <div class="min-h-screen bg-gray-900">
     <!-- Navigation -->
-    <nav class="border-b border-gray-800 bg-gray-900" v-if="isAuthenticated">
+    <nav v-if="isAuthenticated" class="border-b border-gray-800 bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14">
           <div class="flex items-center space-x-6">
@@ -42,8 +42,8 @@ const handleLogout = () => {
           <div class="flex items-center space-x-3">
             <span class="text-sm text-gray-400">{{ authStore.user?.name }}</span>
             <button
-              @click="handleLogout"
               class="px-3 py-1 text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-gray-600"
+              @click="handleLogout"
             >
               Logout
             </button>

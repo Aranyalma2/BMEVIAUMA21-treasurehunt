@@ -43,13 +43,13 @@ onMounted(() => {
         <button
           v-for="status in ['all', 'pending', 'approved', 'rejected']"
           :key="status"
-          @click="statusFilter = status as any"
           :class="[
             'px-2 py-1 text-xs font-medium border',
             statusFilter === status
               ? 'bg-gray-700 text-white border-gray-700'
-              : 'bg-gray-800 text-gray-300 border-gray-700 hover:border-gray-600'
+              : 'bg-gray-800 text-gray-300 border-gray-700 hover:border-gray-600',
           ]"
+          @click="statusFilter = status as any"
         >
           {{ status.charAt(0).toUpperCase() + status.slice(1) }}
         </button>
@@ -84,7 +84,7 @@ onMounted(() => {
           <tr v-for="mission in filteredMissions" :key="mission.id" class="hover:bg-gray-800">
             <td class="px-4 py-3 text-white font-medium">{{ mission.name }}</td>
             <td class="px-4 py-3 text-gray-400">
-              {{ mission.description?.substring(0, 40) }}{{ mission.description?.length ?? 0 > 40 ? '...' : '' }}
+              {{ mission.description?.substring(0, 40) }}{{ (mission.description?.length ?? 0 > 40) ? '...' : '' }}
             </td>
             <td class="px-4 py-3 text-gray-400">{{ mission.location?.name || '—' }}</td>
             <td class="px-4 py-3">
@@ -95,7 +95,7 @@ onMounted(() => {
                     ? 'bg-yellow-900 border-yellow-700 text-yellow-200'
                     : mission.status === 'approved'
                       ? 'bg-green-900 border-green-700 text-green-200'
-                      : 'bg-red-900 border-red-700 text-red-200'
+                      : 'bg-red-900 border-red-700 text-red-200',
                 ]"
               >
                 {{ mission.status.charAt(0).toUpperCase() + mission.status.slice(1) }}
@@ -106,24 +106,24 @@ onMounted(() => {
               <div class="flex justify-center gap-1">
                 <button
                   v-if="mission.status === 'pending'"
-                  @click="handleApprove(mission.id)"
                   class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-green-900 hover:border-green-700"
                   title="Approve"
+                  @click="handleApprove(mission.id)"
                 >
                   Approve
                 </button>
                 <button
                   v-if="mission.status === 'pending'"
-                  @click="handleReject(mission.id)"
                   class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-yellow-900 hover:border-yellow-700"
                   title="Reject"
+                  @click="handleReject(mission.id)"
                 >
                   Reject
                 </button>
                 <button
-                  @click="handleDelete(mission.id)"
                   class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-red-900 hover:border-red-700"
                   title="Delete"
+                  @click="handleDelete(mission.id)"
                 >
                   Delete
                 </button>

@@ -42,14 +42,14 @@ class ApiClient {
 
     if (!response.ok) {
       const error = await response.json();
-      
+
       // Handle 403 Forbidden - logout and redirect to login
       if (response.status === 403 && this.handle403Callback) {
         this.clearToken();
         localStorage.removeItem('admin_token');
         this.handle403Callback();
       }
-      
+
       throw new Error(error.message || `API error: ${response.status}`);
     }
 

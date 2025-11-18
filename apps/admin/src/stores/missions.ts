@@ -49,7 +49,7 @@ export const useMissionsStore = defineStore('missions', () => {
   const approveMission = async (id: number) => {
     try {
       const updated = await apiClient.approveMission(id);
-      const index = missions.value.findIndex(m => m.id === id);
+      const index = missions.value.findIndex((m) => m.id === id);
       if (index !== -1) {
         missions.value[index] = updated;
       }
@@ -63,7 +63,7 @@ export const useMissionsStore = defineStore('missions', () => {
   const rejectMission = async (id: number) => {
     try {
       const updated = await apiClient.rejectMission(id);
-      const index = missions.value.findIndex(m => m.id === id);
+      const index = missions.value.findIndex((m) => m.id === id);
       if (index !== -1) {
         missions.value[index] = updated;
       }
@@ -77,7 +77,7 @@ export const useMissionsStore = defineStore('missions', () => {
   const deleteMission = async (id: number) => {
     try {
       await apiClient.deleteMission(id);
-      missions.value = missions.value.filter(m => m.id !== id);
+      missions.value = missions.value.filter((m) => m.id !== id);
       return true;
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to delete mission';
