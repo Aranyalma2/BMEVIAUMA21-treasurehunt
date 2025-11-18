@@ -67,19 +67,19 @@ class ApiClient {
   // Admin Mission endpoints
   getAllMissions(status?: string) {
     const query = status ? `?status=${status}` : '';
-    return this.request(`/missions/all${query}`);
+    return this.request(`/mission/all${query}`);
   }
 
   deleteMission(id: number) {
-    return this.request(`/missions/${id}`, { method: 'DELETE' });
+    return this.request(`/mission/${id}`, { method: 'DELETE' });
   }
 
   approveMission(id: number) {
-    return this.request(`/missions/${id}/approve`, { method: 'POST' });
+    return this.request(`/mission/${id}/approve`, { method: 'POST' });
   }
 
   rejectMission(id: number) {
-    return this.request(`/missions/${id}/reject`, { method: 'POST' });
+    return this.request(`/mission/${id}/reject`, { method: 'POST' });
   }
 
   // Admin User endpoints
