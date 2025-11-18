@@ -1,27 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, IntersectionType, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsString, ValidateNested } from 'class-validator';
+import { ValidateNested } from 'class-validator';
 
+import { Mission } from '../entities/mission.entity';
 import { LocationDto } from './location.dto';
 import { TaskDto } from './task.dto';
 
-export class CreateMissionDto {
-  @ApiProperty({
-    description: 'Mission name',
-    type: String,
-    example: 'Parliament Architecture Quiz',
-  })
-  @IsString()
-  name: string;
-
-  @ApiProperty({
-    description: 'Mission description',
-    type: String,
-    example: 'Learn about the magnificent Hungarian Parliament Building and test your knowledge!',
-  })
-  @IsString()
-  description: string;
-
+class CreateMissionNested {
   @ApiProperty({
     description: 'Mission location',
     type: LocationDto,
@@ -49,3 +34,5 @@ export class CreateMissionDto {
   @Type(() => TaskDto)
   task: TaskDto;
 }
+
+export class CreateMissionDto extends IntersectionType(PickType(Mission, ['name', 'description']), CreateMissionNested) {}

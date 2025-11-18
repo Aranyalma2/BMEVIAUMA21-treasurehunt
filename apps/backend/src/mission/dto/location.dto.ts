@@ -1,20 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { PickType } from '@nestjs/swagger';
 
-export class LocationDto {
-  @ApiProperty({
-    description: 'Longitude coordinate',
-    type: Number,
-    example: 19.0454,
-  })
-  @IsNumber()
-  longitude: number;
+import { Mission } from '../entities/mission.entity';
 
-  @ApiProperty({
-    description: 'Latitude coordinate',
-    type: Number,
-    example: 47.5069,
-  })
-  @IsNumber()
-  latitude: number;
-}
+export class LocationDto extends PickType(Mission, ['longitude', 'latitude']) {}
