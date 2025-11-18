@@ -28,7 +28,7 @@ async function bootstrap() {
 
   //Global pipes and filters
   const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalFilters(new PrismaInitializationErrorFilter());
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
   await app.listen(BACKEND_PORT);
