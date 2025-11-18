@@ -1,10 +1,30 @@
-import { Module } from '@nestjs/common';
+import { HttpStatus, Module } from '@nestjs/common';
+import { PrismaModule, providePrismaClientExceptionFilter } from 'nestjs-prisma';
+
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { RolesModule } from './roles/roles.module';
+import { MissionModule } from './mission/mission.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 
 @Module({
-  imports: [],
+  imports: [
+    PrismaModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UserModule,
+    RolesModule,
+    MissionModule,
+    LeaderboardModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    providePrismaClientExceptionFilter({
+      // Prisma Error Code: HTTP Status Response
+      P2000: HttpStatus.BAD_REQUEST,
+      P2002: HttpStatus.CONFLICT,
+      P2025: HttpStatus.NOT_FOUND,
+    }),
+  ],
 })
 export class AppModule {}
