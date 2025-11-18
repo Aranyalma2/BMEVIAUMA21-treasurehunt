@@ -15,16 +15,31 @@ interface User {
   name: string;
 }
 
+interface DerivativeTask {
+  question: string;
+  answer?: any;
+  answers?: string[] | Array<{ text: string; isTrue: boolean }>;
+  options?: string[];
+}
+
+interface Task {
+  type: string;
+  derivativeTask: DerivativeTask;
+}
+
 export interface Mission {
   id: number;
   name: string;
   description: string;
-  location: Location;
-  status: 'pending' | 'approved' | 'rejected';
-  createdAt: Date;
-  createdBy: User;
-  approvedAt?: Date;
-  approvedBy?: User;
+  longitude: number;
+  latitude: number;
+  task?: Task;
+  status: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  createdById: number;
+  approvedAt?: string | Date;
+  approvedById?: number;
 }
 
 export const useMissionsStore = defineStore('missions', () => {
@@ -85,6 +100,10 @@ export const useMissionsStore = defineStore('missions', () => {
     }
   };
 
+  const getMissionById = (id: number): Mission | undefined => {
+    return missions.value.find((m) => m.id === id);
+  };
+
   return {
     missions,
     isLoading,
@@ -94,5 +113,6 @@ export const useMissionsStore = defineStore('missions', () => {
     approveMission,
     rejectMission,
     deleteMission,
+    getMissionById,
   };
 });

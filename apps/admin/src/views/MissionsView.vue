@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useMissionsStore } from '@/stores/missions';
 
+const router = useRouter();
 const missionsStore = useMissionsStore();
 const statusFilter = ref<'all' | 'pending' | 'approved' | 'rejected'>('all');
 
@@ -9,21 +11,11 @@ const filteredMissions = computed(() => {
   if (statusFilter.value === 'all') {
     return missionsStore.missions;
   }
-  return missionsStore.missions.filter((m) => m.status === statusFilter.value);
+  return missionsStore.missions.filter((m) => m.status.toLowerCase() === statusFilter.value.toLowerCase());
 });
 
-const handleApprove = async (id: number) => {
-  await missionsStore.approveMission(id);
-};
-
-const handleReject = async (id: number) => {
-  await missionsStore.rejectMission(id);
-};
-
-const handleDelete = async (id: number) => {
-  if (confirm('Are you sure you want to delete this mission?')) {
-    await missionsStore.deleteMission(id);
-  }
+const viewDetails = (id: number) => {
+  router.push(`/missions/${id}`);
 };
 
 const formatDate = (date: string) => {
@@ -86,48 +78,32 @@ onMounted(() => {
             <td class="px-4 py-3 text-gray-400">
               {{ mission.description?.substring(0, 40) }}{{ (mission.description?.length ?? 0 > 40) ? '...' : '' }}
             </td>
-            <td class="px-4 py-3 text-gray-400">{{ mission.location?.name || '—' }}</td>
+            <td class="px-4 py-3 text-gray-400">
+              lat: {{ mission.latitude || '—' }} long: {{ mission.longitude || '—' }}
+            </td>
             <td class="px-4 py-3">
               <span
                 :class="[
                   'px-2 py-1 text-xs font-medium border',
-                  mission.status === 'pending'
+                  mission.status.toLowerCase() === 'pending'
                     ? 'bg-yellow-900 border-yellow-700 text-yellow-200'
-                    : mission.status === 'approved'
+                    : mission.status.toLowerCase() === 'approved'
                       ? 'bg-green-900 border-green-700 text-green-200'
                       : 'bg-red-900 border-red-700 text-red-200',
                 ]"
               >
-                {{ mission.status.charAt(0).toUpperCase() + mission.status.slice(1) }}
+                {{ mission.status.charAt(0).toUpperCase() + mission.status.slice(1).toLowerCase() }}
               </span>
             </td>
             <td class="px-4 py-3 text-gray-400">{{ formatDate(mission.createdAt) }}</td>
             <td class="px-4 py-3 text-center">
-              <div class="flex justify-center gap-1">
-                <button
-                  v-if="mission.status === 'pending'"
-                  class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-green-900 hover:border-green-700"
-                  title="Approve"
-                  @click="handleApprove(mission.id)"
-                >
-                  Approve
-                </button>
-                <button
-                  v-if="mission.status === 'pending'"
-                  class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-yellow-900 hover:border-yellow-700"
-                  title="Reject"
-                  @click="handleReject(mission.id)"
-                >
-                  Reject
-                </button>
-                <button
-                  class="px-2 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-red-900 hover:border-red-700"
-                  title="Delete"
-                  @click="handleDelete(mission.id)"
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                class="px-3 py-1 text-xs border border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-600"
+                title="View Details"
+                @click="viewDetails(mission.id)"
+              >
+                Details
+              </button>
             </td>
           </tr>
         </tbody>
