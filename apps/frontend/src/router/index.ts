@@ -43,6 +43,12 @@ const router = createRouter({
       component: () => import('../views/ProfileView.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/completed-missions',
+      name: 'completed-missions',
+      component: () => import('../views/CompletedMissionsView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 });
 

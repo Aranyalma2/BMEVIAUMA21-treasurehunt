@@ -7,6 +7,7 @@ import { JwtUserDto } from 'src/auth/dto/jwt-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+import { CompletedMissionDto } from './dto/completed-mission.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserAdminDto } from './dto/update-user-admin.dto';
@@ -25,6 +26,13 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'User not found with ID' })
   getCurrentUser(@CurrentUser() user: JwtUserDto): Promise<ResponseUserDto> {
     return this.userService.findOne(Number(user.id));
+  }
+
+  @Get('me/completed')
+  @ApiOperation({ summary: 'Get list of completed missions for logged-in user' })
+  @ApiResponse({ status: 200, type: [CompletedMissionDto], description: 'List of completed missions' })
+  getCompletedMissions(@CurrentUser() user: JwtUserDto): Promise<CompletedMissionDto[]> {
+    return this.userService.getCompletedMissions(Number(user.id));
   }
 
   @Patch('me')
