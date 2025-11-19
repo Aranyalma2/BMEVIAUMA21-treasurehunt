@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import apiClient from '@/api/client';
 import BottomNav from '@/components/BottomNav.vue';
+import '@/assets/views/LeaderboardView.css';
 
 const activeTab = ref<'total' | 'bytasks'>('total');
 const totalLeaderboard = ref<Array<{ name: string; points: number }>>([]);
@@ -153,18 +154,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-.leaderboard-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #f3f4f6;
-}
-
-.leaderboard-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  padding-bottom: 5rem; /* Extra padding for bottom nav */
-}
-</style>
