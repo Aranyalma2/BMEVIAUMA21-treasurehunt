@@ -98,9 +98,7 @@ onMounted(() => {
           ]"
         >
           <div class="flex items-center space-x-4">
-            <div class="text-xl font-bold w-12 text-center text-gray-600">
-              {{ index + 1 }}.
-            </div>
+            <div class="text-xl font-bold w-12 text-center text-gray-600">{{ index + 1 }}.</div>
             <div>
               <div class="font-semibold text-gray-800">{{ entry.name }}</div>
             </div>
@@ -130,9 +128,7 @@ onMounted(() => {
               class="px-4 py-3 flex items-center justify-between"
             >
               <div class="flex items-center space-x-3">
-                <div class="text-lg font-bold w-8 text-center text-gray-600">
-                  {{ index + 1 }}.
-                </div>
+                <div class="text-lg font-bold w-8 text-center text-gray-600">{{ index + 1 }}.</div>
                 <div class="font-medium text-gray-800">{{ entry.name }}</div>
               </div>
               <div class="font-bold text-blue-600">{{ entry.points }} pts</div>
@@ -153,4 +149,3 @@ onMounted(() => {
     <BottomNav />
   </div>
 </template>
-
