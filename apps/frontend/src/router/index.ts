@@ -26,6 +26,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/create-mission',
+      name: 'create-mission',
+      component: () => import('../views/CreateMissionView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/leaderboard',
       name: 'leaderboard',
       component: () => import('../views/LeaderboardView.vue'),

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import '@/assets/views/MapView.css';
@@ -14,6 +15,8 @@ import { LMap, LTileLayer, LMarker, LIcon, LPopup } from '@vue-leaflet/vue-leafl
 import apiClient from '@/api/client';
 import BottomNav from '@/components/BottomNav.vue';
 import type { LatLngExpression } from 'leaflet';
+
+const router = useRouter();
 
 const zoom = ref(16);
 const minZoom = 16; // Lock the minimum zoom level
@@ -236,6 +239,10 @@ const closeMissionPanel = () => {
   fetchNearbyMissions();
 };
 
+const goToCreateMission = () => {
+  router.push('/create-mission');
+};
+
 onMounted(() => {
   getUserLocation();
 });
@@ -419,6 +426,11 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- Create Mission Button -->
+    <button class="create-mission-button" title="Create New Mission" @click="goToCreateMission">
+      <span class="plus-icon">+</span>
+    </button>
 
     <BottomNav />
   </div>
