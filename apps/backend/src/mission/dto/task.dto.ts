@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { TaskType } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsArray, IsBoolean, IsEnum, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsBoolean, IsEnum, IsObject, IsString, ValidateNested } from 'class-validator';
 
 export class MultiChoiceAnswerDto {
   @ApiProperty({
@@ -98,5 +98,6 @@ export class TaskDto {
       answer: true,
     },
   })
+  @IsObject()
   derivativeTask: TrueOrFalseTaskDto | MultiChoiceTaskDto | SimpleQuestionTaskDto;
 }

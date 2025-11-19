@@ -16,7 +16,6 @@ class ApiClient {
     return this.token;
   }
 
-  // Set callback for handling 403 errors
   onForbidden(callback: () => void) {
     this.handle403Callback = callback;
   }
@@ -41,12 +40,11 @@ class ApiClient {
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = await response.json().catch(() => ({ message: `API error: ${response.status}` }));
 
-      // Handle 403 Forbidden - logout and redirect to login
       if (response.status === 403 && this.handle403Callback) {
         this.clearToken();
-        localStorage.removeItem('admin_token');
+        localStorage.removeItem('user_token');
         this.handle403Callback();
       }
 
@@ -64,51 +62,59 @@ class ApiClient {
     });
   }
 
-  // Admin Mission endpoints
-  getAllMissions(status?: string) {
-    const query = status ? `?status=${status}` : '';
-    return this.request(`/mission/all${query}`);
-  }
-
-  deleteMission(id: number) {
-    return this.request(`/mission/${id}`, { method: 'DELETE' });
-  }
-
-  approveMission(id: number) {
-    return this.request(`/mission/${id}/approve`, { method: 'POST' });
-  }
-
-  rejectMission(id: number) {
-    return this.request(`/mission/${id}/reject`, { method: 'POST' });
-  }
-
-  // Admin User endpoints
-  getRoles() {
-    return this.request('/roles');
-  }
-
-  getAllUsers() {
-    return this.request('/user/all');
-  }
-
-  getUser(id: number) {
-    return this.request(`/user/${id}`);
-  }
-
-  updateUser(id: number, role: string) {
-    return this.request(`/user/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ role }),
+  register(username: string, name: string, password: string) {
+    return this.request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, name, password }),
     });
   }
 
-  deleteUser(id: number) {
-    return this.request(`/user/${id}`, { method: 'DELETE' });
+  // Mission endpoints
+  getNearbyMissions(longitude: number, latitude: number) {
+    return this.request(`/mission?longitude=${longitude}&latitude=${latitude}`);
+  }
+
+  getMission(id: number) {
+    return this.request(`/mission/${id}`);
+  }
+
+  createMission(data: any) {
+    return this.request('/mission', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  startMission(id: number, location: { longitude: number; latitude: number }) {
+    return this.request(`/mission/${id}/start`, {
+      method: 'POST',
+      body: JSON.stringify({ location }),
+    });
+  }
+
+  submitMission(id: number, location: { longitude: number; latitude: number }, task: any) {
+    return this.request(`/mission/${id}/submissions`, {
+      method: 'POST',
+      body: JSON.stringify({ location, task }),
+    });
+  }
+
+  // Leaderboard endpoints
+  getLeaderboard() {
+    return this.request('/leaderboard');
+  }
+
+  getLeaderboardByTasks() {
+    return this.request('/leaderboard/bytasks');
   }
 
   // Profile endpoints
   getCurrentUser() {
     return this.request('/user/me');
+  }
+
+  deleteCurrentUser() {
+    return this.request('/user/me', { method: 'DELETE' });
   }
 }
 
