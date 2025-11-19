@@ -113,6 +113,10 @@ class ApiClient {
     return this.request('/user/me');
   }
 
+  getCompletedMissions() {
+    return this.request('/user/me/completed');
+  }
+
   deleteCurrentUser() {
     return this.request('/user/me', { method: 'DELETE' });
   }

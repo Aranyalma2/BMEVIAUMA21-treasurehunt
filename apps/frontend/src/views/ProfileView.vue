@@ -53,27 +53,13 @@ onMounted(() => {
             <div class="text-3xl font-bold text-yellow-600">{{ user?.score || 0 }}</div>
             <div class="text-sm text-gray-600 mt-1">Total Points</div>
           </div>
-          <div class="bg-green-50 rounded-lg p-4 text-center">
-            <div class="text-3xl font-bold text-green-600">{{ user?.completedMissions?.length || 0 }}</div>
-            <div class="text-sm text-gray-600 mt-1">Missions Completed</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Completed Missions -->
-      <div v-if="user?.completedMissions && user.completedMissions.length > 0" class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Completed Missions</h3>
-        <div class="space-y-2">
           <div
-            v-for="mission in user.completedMissions"
-            :key="mission.id"
-            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+            class="bg-green-50 rounded-lg p-4 text-center cursor-pointer hover:bg-green-100 transition-colors"
+            @click="router.push('/completed-missions')"
           >
-            <div>
-              <div class="font-medium text-gray-800">{{ mission.name }}</div>
-              <div class="text-sm text-gray-600">{{ mission.description }}</div>
-            </div>
-            <span class="text-green-600">✓</span>
+            <div class="text-3xl font-bold text-green-600">{{ user?.completedTaskCount || 0 }}</div>
+            <div class="text-sm text-gray-600 mt-1">Missions Completed</div>
+            <div class="text-xs text-green-600 mt-1">→ View All</div>
           </div>
         </div>
       </div>

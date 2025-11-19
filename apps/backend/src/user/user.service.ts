@@ -68,12 +68,33 @@ export class UserService {
   async findOne(id: number): Promise<ResponseUserDto> {
     const userObject = await this.prisma.user.findUnique({
       where: { id },
-      select: { id: true, username: true, name: true, role: true, createdAt: true },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        role: true,
+        createdAt: true,
+        _count: {
+          select: {
+            completedMissions: true,
+          },
+        },
+      },
     });
     if (!userObject) {
       throw new NotFoundException(`User not found with ID: ${id}`);
     }
-    return userObject;
+
+    // Calculate score based on completed missions
+    const score = userObject._count.completedMissions;
+    const completedTaskCount = userObject._count.completedMissions;
+
+    const { _count, ...rest } = userObject;
+    return {
+      ...rest,
+      score,
+      completedTaskCount,
+    } as ResponseUserDto;
   }
 
   /**
@@ -142,5 +163,39 @@ export class UserService {
       }
       throw error;
     }
+  }
+
+  /**
+   * Get completed missions for a user
+   * @param userId - The user ID
+   * @returns List of completed missions with details
+   */
+  async getCompletedMissions(userId: number) {
+    const completedMissions = await this.prisma.completedMission.findMany({
+      where: { userId },
+      include: {
+        mission: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            longitude: true,
+            latitude: true,
+          },
+        },
+      },
+      orderBy: {
+        completedAt: 'desc',
+      },
+    });
+
+    return completedMissions.map((cm) => ({
+      id: cm.mission.id,
+      name: cm.mission.name,
+      description: cm.mission.description,
+      longitude: cm.mission.longitude,
+      latitude: cm.mission.latitude,
+      completedAt: cm.completedAt,
+    }));
   }
 }
