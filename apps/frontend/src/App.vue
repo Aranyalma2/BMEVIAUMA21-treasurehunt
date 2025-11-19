@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 
 onMounted(() => {
   authStore.initAuth();
-  
+
   // Disable context menu (right-click menu)
   document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -28,7 +28,8 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -60,7 +61,8 @@ button {
 }
 
 /* Input reset */
-input, textarea {
+input,
+textarea {
   font-family: inherit;
 }
 </style>

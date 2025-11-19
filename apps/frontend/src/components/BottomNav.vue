@@ -25,13 +25,11 @@ const goToTab = (tabName: string) => {
       <button
         v-for="tab in tabs"
         :key="tab.name"
-        @click="goToTab(tab.name)"
         :class="[
           'flex flex-col items-center justify-center flex-1 h-full transition-colors',
-          currentTab === tab.name
-            ? 'text-blue-600 bg-blue-50'
-            : 'text-gray-600 hover:text-blue-500 hover:bg-gray-50'
+          currentTab === tab.name ? 'text-blue-600 bg-blue-50' : 'text-gray-600 hover:text-blue-500 hover:bg-gray-50',
         ]"
+        @click="goToTab(tab.name)"
       >
         <span class="text-2xl mb-1">{{ tab.icon }}</span>
         <span class="text-xs font-medium">{{ tab.label }}</span>
