@@ -1,0 +1,374 @@
+.map-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 4rem; /* Space for bottom navigation */
+}
+
+.map {
+  height: calc(100vh - 4rem); /* Subtract bottom nav height */
+  width: 100%;
+  z-index: 0;
+}
+
+.error-banner {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.location-loading-indicator {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.location-loading-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.small-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Popup Styles */
+:deep(.leaflet-popup-content-wrapper) {
+  border-radius: 0.5rem;
+  padding: 0;
+}
+
+:deep(.leaflet-popup-content) {
+  margin: 0;
+  padding: 0.75rem;
+  min-width: 200px;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup-content strong {
+  display: block;
+  font-size: 1rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.popup-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0.5rem 0;
+}
+
+/* Mission Panel */
+.mission-panel {
+  position: absolute;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 70vh;
+  overflow-y: auto;
+  z-index: 999;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.panel-content {
+  padding: 1.5rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.panel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  flex: 1;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #1f2937;
+}
+
+.mission-description {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.start-button {
+  width: 100%;
+  background-color: #16a34a;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.start-button:hover:not(:disabled) {
+  background-color: #15803d;
+}
+
+.start-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.distance-warning {
+  text-align: center;
+  padding: 1rem;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Task Styles */
+.task-container {
+  margin-top: 1rem;
+}
+
+.question-box {
+  background-color: #eff6ff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.question-label {
+  font-size: 0.875rem;
+  color: #2563eb;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.question-text {
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.option-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.option-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.option-button.selected {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.true-button.selected {
+  background-color: #16a34a;
+  border-color: #16a34a;
+}
+
+.false-button.selected {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.answer-input-container {
+  margin-bottom: 1rem;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.submit-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Result Styles */
+.result-container {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.success-result,
+.failure-result {
+  margin-bottom: 1.5rem;
+}
+
+.result-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.success-result .result-title {
+  color: #16a34a;
+}
+
+.failure-result .result-title {
+  color: #dc2626;
+}
+
+.result-message {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.close-result-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-result-button:hover {
+  background-color: #2563eb;
+}
+
+/* Mobile Optimization */
+@media (max-width: 640px) {
+  .panel-content {
+    padding: 1rem;
+  }
+
+  .panel-title {
+    font-size: 1.25rem;
+  }
+
+  .mission-panel {
+    max-height: 75vh;
+  }
+}
