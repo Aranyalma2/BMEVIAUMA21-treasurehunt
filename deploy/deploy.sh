@@ -124,6 +124,12 @@ run_migrations() {
     print_success "Migrations complete"
 }
 
+run_db_setup() {
+    print_info "Setting up database..."
+    sudo docker compose exec backend sh -c "cd .. && yarn prisma:setup"
+    print_success "Database setup complete"
+}
+
 backup_database() {
     BACKUP_FILE="backup_$(date +%Y%m%d_%H%M%S).sql"
     print_info "Creating database backup: $BACKUP_FILE"
@@ -172,6 +178,7 @@ Commands:
     logs <service>  - Show logs from specific service
     status          - Show status of all services
     migrate         - Run database migrations
+    setupdb         - Setup database with initial schema and data
     backup          - Create database backup
     restore <file>  - Restore database from backup file
     deploy          - Full deployment (build + start)
@@ -222,6 +229,9 @@ case "$1" in
         ;;
     migrate)
         run_migrations
+        ;;
+    setupdb)
+        run_db_setup
         ;;
     backup)
         backup_database
