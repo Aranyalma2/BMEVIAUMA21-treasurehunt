@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.3"
 
 services:
   # PostgreSQL Database
@@ -7,15 +7,15 @@ services:
     container_name: treasurehunt-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-treasurehunt}
-      POSTGRES_USER: ${POSTGRES_USER:-treasurehunt}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - treasurehunt-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-treasurehunt}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -29,13 +29,14 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://${POSTGRES_USER:-treasurehunt}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-treasurehunt}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       BACKEND_PORT: 3002
-      CORS_ORIGIN: ${CORS_ORIGIN}
+      ADMIN_URL: ${ADMIN_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
       JWT_SECRET: ${JWT_SECRET}
+      npm_package_version: ${npm_package_version}
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     networks:
       - treasurehunt-network
     healthcheck:

@@ -22,7 +22,8 @@
     "format:check": "prettier --check apps",
     "lint": "eslint apps --ext .ts,.tsx,.vue --max-warnings 0",
     "lint:fix": "eslint apps --ext .ts,.tsx,.vue --fix",
-    "prisma:mock": "yarn prisma migrate reset --skip-generate erd && node apps/database/mock.js"
+    "prisma:mock": "yarn prisma migrate reset --skip-generate erd && node apps/database/mock.js",
+    "prisma:setup": "node apps/database/setup.js"
   },
   "workspaces": [
     "apps/*"

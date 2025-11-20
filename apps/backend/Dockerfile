@@ -15,7 +15,7 @@ COPY apps/backend ./apps/backend
 COPY apps/database ./apps/database
 
 # Generate Prisma Client
-RUN cd apps/database && npx prisma generate
+RUN yarn prisma generate --generator client
 
 # Build backend
 RUN cd apps/backend && yarn build
@@ -38,14 +38,14 @@ RUN yarn install --frozen-lockfile --production
 # Copy built application
 COPY --from=builder /app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /app/apps/database ./apps/database
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # Generate Prisma Client for production
-RUN cd apps/database && npx prisma generate
+WORKDIR /app
+RUN yarn prisma generate --generator client
 
 WORKDIR /app/apps/backend
 
 EXPOSE 3002
 
 # Run migrations and start the application
-CMD ["sh", "-c", "cd ../database && npx prisma migrate deploy && cd ../backend && node dist/main.js"]
+CMD ["sh", "-c", "node dist/main.js"]
