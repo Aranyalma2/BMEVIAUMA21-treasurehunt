@@ -1,0 +1,8 @@
+# Nginx logs directory
+
+This directory will contain nginx access and error logs:
+
+- `access.log` - HTTP access logs
+- `error.log` - Error logs
+
+The logs are mounted as a volume from the nginx container.
