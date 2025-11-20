@@ -1,4 +1,4 @@
-const { PrismaClient, Role} = require('@prisma/client');
+const { PrismaClient, Role } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const { config } = require('dotenv');
 
@@ -20,13 +20,13 @@ async function main() {
   console.log('Cleared existing data');
 
   await prisma.user.create({
-      data: {
-        username: 'admin',
-        password: await bcrypt.hash('password', 10),
-        name: 'Admin',
-        role: Role.ADMIN,
-      },
-    });
+    data: {
+      username: 'admin',
+      password: await bcrypt.hash('password', 10),
+      name: 'Admin',
+      role: Role.ADMIN,
+    },
+  });
 }
 
 main()
@@ -39,5 +39,3 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
-
-
