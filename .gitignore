@@ -1,3 +1,4 @@
 /node_modules
 .env
-/apps/database/migrations
+/deploy/ssl/*/*.pem
+/deploy/nginx/conf.d/*.conf
