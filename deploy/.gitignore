@@ -1,0 +1,21 @@
+# Environment files
+.env
+
+# SSL certificates (private keys should never be committed)
+ssl/*/*.pem
+
+# Nginx generated config
+nginx/conf.d/default.conf
+
+# Logs
+logs/**/*.log
+logs/**/access.log
+logs/**/error.log
+
+# Database backups
+*.sql
+backup_*.sql
+
+# Temporary files
+*.tmp
+*.temp
